@@ -77,8 +77,8 @@ class UI{
     {
       document.querySelector('#Title').value = el.parentElement.parentElement.parentElement.children[0].textContent
       document.querySelector('#Author').value = el.parentElement.parentElement.parentElement.children[1].textContent
-      document.querySelector('#Id').value = el.parentElement.parentElement.parentElement.children[2].textContent
-      
+      document.querySelector('#Id').value = el.parentElement.parentElement.parentElement.children[2].textContent     
+      UI.deleteBook(el.parentElement.parentElement.nextElementSibling.children[0]) 
     }
 }
 
@@ -159,13 +159,14 @@ document.querySelector('#book-list').addEventListener('click' ,(e) =>{
   if(e.target.id === 'cross')
   {
     UI.deleteBook(e.target)
-    console.log(e.target)
     Store.removeBook(e.target.parentElement.previousElementSibling.previousElementSibling.textContent) 
     UI.showAlert('book removed','success')
   }
-  else
+  else if(e.target.id === 'pen')
   {
     UI.updateBook(e.target)
+    const del = e.target.parentElement.parentElement.previousElementSibling.textContent;
+    Store.removeBook(del)
     UI.showAlert('book updated','success')
   }
     // e.preventDefault()
