@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', UI.displayBooks);
     //validate
     if(title === '' || author === '' || id === '' ||  Store.check(id))
     {
-        UI.showAlert('please fill in all fields correctly','danger');
+        UI.showAlert('please fill in all fields correctly and check your id','danger');
     }
     else {
 
