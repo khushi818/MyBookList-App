@@ -72,6 +72,8 @@ class UI{
         el.parentElement.parentElement.remove();
       }   
     }
+    //check id
+    
 
     static updateBook(el)
     {
@@ -99,7 +101,18 @@ class Store
 
     return books;
   }
-
+  static check(id)
+    {
+      const books = Store.getBooks();
+      for (let book of books)
+      {
+       if(book.id === id)
+       {
+       return true;
+       }
+      }
+      return false;
+    }
   static addBook(book)
   {
     const books =  Store.getBooks();
@@ -107,7 +120,6 @@ class Store
     books.push(book);
     localStorage.setItem('books', JSON.stringify(books));
   }
-  
   static removeBook(id)
   {
     const books = Store.getBooks()
@@ -129,14 +141,15 @@ document.addEventListener('DOMContentLoaded', UI.displayBooks);
   document.querySelector('#book-form').addEventListener('submit',(e) =>
   {
     e.preventDefault();
+    
     const title =  document.querySelector('#Title').value;
     const author = document.querySelector('#Author').value;
     const id = document.querySelector('#Id').value;
     
     //validate
-    if(title === '' || author === '' || id === '')
+    if(title === '' || author === '' || id === '' ||  Store.check(id))
     {
-        UI.showAlert('please fill in all fields','danger');
+        UI.showAlert('please fill in all fields correctly','danger');
     }
     else {
 
