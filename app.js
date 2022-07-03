@@ -60,11 +60,11 @@ class UI{
 
     static clearFields()
     {
-    document.querySelector('#Title').value = '';
-    document.querySelector('#Author').value = '';
-    document.querySelector('#Id').value = '';
+      document.querySelector('#Title').value = '';
+      document.querySelector('#Author').value = '';
+      document.querySelector('#Id').value = '';
     }
-
+    
     static deleteBook(el)
     {
       if(el.classList.contains('delete')) 
@@ -134,8 +134,7 @@ class Store
   localStorage.setItem('books',JSON.stringify(books));
   }
 }
-//Event:Display Books
-document.addEventListener('DOMContentLoaded', UI.displayBooks);
+
 
 //Event:add a book
   document.querySelector('#book-form').addEventListener('submit',(e) =>
@@ -185,3 +184,15 @@ document.querySelector('#book-list').addEventListener('click' ,(e) =>{
     // e.preventDefault()
 })
 
+document.querySelector('#sort-button').addEventListener('click',()=>
+{
+  const books = Store.getBooks();
+  books.sort((a,b) =>{
+    return a.id - b.id; 
+  })
+  localStorage.setItem('books', JSON.stringify(books));// add to local storage
+  window.location.reload();// so that window reload and set localstorage
+})
+
+//Event:Display Books
+document.addEventListener('DOMContentLoaded', UI.displayBooks);
