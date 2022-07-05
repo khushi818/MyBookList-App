@@ -2,8 +2,8 @@
 class Book{
     constructor(title,author,id)
     {
-    this.title = title;
-    this.author = author;
+    this.title = title.trim();
+    this.author = author.trim();
     this.id = id;
     }
 }
@@ -196,3 +196,89 @@ document.querySelector('#sort-button').addEventListener('click',()=>
 
 //Event:Display Books
 document.addEventListener('DOMContentLoaded', UI.displayBooks);
+
+
+
+// Search Box and its searchhh
+
+//under search
+const ultag = document.querySelector('#form-search')
+const books = Store.getBooks();
+for(let book = 0 ; book < books.length ; book++){
+  const childdiv = ` <li class= "user-card  w-100 p-2  align-items-center  justify-content-center d-none"
+                         data-user${book} = "${book}">
+            Title:${books[book].title.trim()}     Author:${books[book].author.trim()}     Id:${books[book].id}
+    </li>`;
+ultag.insertAdjacentHTML('beforeend',childdiv)
+}
+
+
+const searchBox = document.querySelector('#Search-Box')
+  const titles = books.map((book) =>
+  {
+    return book.title; 
+  })
+  const ids = books.map((book) =>
+  {
+    return book.id; 
+  })
+  const authors = books.map((book) =>
+  {
+    return book.author; 
+  })
+
+
+function noresult(){
+  document.querySelector('#body-content').classList.remove('d-none');
+  document.querySelector('#body-content').classList.add('d-block');
+  
+  const searchCard = document.querySelectorAll('.user-card')
+  for (let card of searchCard){
+  card.classList.add('d-none');
+  card.classList.remove('d-flex');
+  }
+}  
+
+searchBox.addEventListener('input',(e) =>
+{
+  document.querySelector('#body-content').classList.remove('d-block');
+  document.querySelector('#body-content').classList.add('d-none');
+  let input = e.target.value;
+  input = input.toLowerCase();
+  //Search(input);
+  if(input.length > 0)
+  for(let i = 0 ; i < books.length ; i++)
+  {
+    if(titles[i].toLowerCase().includes(input))
+    {
+    let card = titles.indexOf(titles[i]);
+    let searchCard = ultag.querySelector(`[data-user${card}]`);
+    searchCard.classList.remove('d-none')
+    searchCard.classList.add('d-flex')
+    }
+    else if(authors[i].toLowerCase().includes(input))
+    {
+    let card = authors.indexOf(authors[i]);
+    let searchCard = ultag.querySelector(`[data-user${card}]`);
+    searchCard.classList.remove('d-none')
+    searchCard.classList.add('d-flex')
+    }
+    else if(ids[i].includes(input))
+    {
+    let card = ids.indexOf(ids[i]);
+    let searchCard = ultag.querySelector(`[data-user${card}]`);
+    searchCard.classList.remove('d-none')
+    searchCard.classList.add('d-flex')
+    }
+  }
+  else
+  {
+   noresult();
+  }
+  e.preventDefault();
+})
+
+
+
+
+
