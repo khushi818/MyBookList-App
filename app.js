@@ -246,7 +246,20 @@ searchBox.addEventListener('input',(e) =>
   let input = e.target.value;
   input = input.toLowerCase();
   //Search(input);
-  if(input.length > 1)
+  if(input.length === 1)
+  {
+  for(let i = 0 ; i < books.length ; i++)
+  {
+    if(ids[i].includes(input))
+    {
+    let card = ids.indexOf(ids[i]);
+    let searchCard = ultag.querySelector(`[data-user${card}]`);
+    searchCard.classList.remove('d-none')
+    searchCard.classList.add('d-flex')
+    }
+  }
+  }
+  if(input.length > 1){
   for(let i = 0 ; i < books.length ; i++)
   {
     if(titles[i].toLowerCase().includes(input))
@@ -271,7 +284,8 @@ searchBox.addEventListener('input',(e) =>
     searchCard.classList.add('d-flex')
     }
   }
-  else
+}
+  if(input.length == 0)
   {
    noresult();
   }
