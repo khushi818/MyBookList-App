@@ -27,6 +27,7 @@ class UI{
         
     const books = Store.getBooks();
     books.forEach((book) => UI.addBooktoList(book));
+    
     }
 
     static addBooktoList(book)
@@ -70,7 +71,7 @@ class UI{
       if(el.classList.contains('delete')) 
       {
         el.parentElement.parentElement.remove();
-      }   
+      }
     }
     //check id
     
@@ -119,6 +120,7 @@ class Store
     console.log(books);
     books.push(book);
     localStorage.setItem('books', JSON.stringify(books));
+    window.location.reload();
   }
   static removeBook(id)
   {
@@ -148,7 +150,7 @@ class Store
     //validate
     if(title === '' || author === '' || id === '' ||  Store.check(id))
     {
-        UI.showAlert('please fill in all fields correctly and check your id','danger');
+       UI.showAlert('please fill in all fields correctly or unique id','danger');
     }
     else {
 
@@ -157,7 +159,9 @@ class Store
         // add books
         UI.addBooktoList(book);
         //add to the store
-        Store.addBook(book); 
+        setTimeout(()=>{
+        Store.addBook(book);
+        },1000) 
         // clear fields
         UI.clearFields();
 
@@ -246,20 +250,8 @@ searchBox.addEventListener('input',(e) =>
   let input = e.target.value;
   input = input.toLowerCase();
   //Search(input);
-  if(input.length === 1)
-  {
-  for(let i = 0 ; i < books.length ; i++)
-  {
-    if(ids[i].includes(input))
-    {
-    let card = ids.indexOf(ids[i]);
-    let searchCard = ultag.querySelector(`[data-user${card}]`);
-    searchCard.classList.remove('d-none')
-    searchCard.classList.add('d-flex')
-    }
-  }
-  }
-  if(input.length > 1){
+
+if(input.length > 1){
   for(let i = 0 ; i < books.length ; i++)
   {
     if(titles[i].toLowerCase().includes(input))
@@ -283,8 +275,23 @@ searchBox.addEventListener('input',(e) =>
     searchCard.classList.remove('d-none')
     searchCard.classList.add('d-flex')
     }
+   }
+}
+
+if(input.length === 1)
+  {
+  for(let i = 0 ; i < books.length ; i++)
+  {
+    if(ids[i].includes(input))
+    {
+    let card = ids.indexOf(ids[i]);
+    let searchCard = ultag.querySelector(`[data-user${card}]`);
+    searchCard.classList.remove('d-none')
+    searchCard.classList.add('d-flex')
+    }
   }
 }
+
   if(input.length == 0)
   {
    noresult();
