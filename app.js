@@ -131,6 +131,7 @@ class Store
       {
         books.splice(index,1);
       }
+      window.location.reload();
   });
 
   localStorage.setItem('books',JSON.stringify(books));
@@ -175,7 +176,9 @@ document.querySelector('#book-list').addEventListener('click' ,(e) =>{
   if(e.target.id === 'cross')
   {
     UI.deleteBook(e.target)
-    Store.removeBook(e.target.parentElement.previousElementSibling.previousElementSibling.textContent) 
+    setTimeout(()=>{
+    Store.removeBook(e.target.parentElement.previousElementSibling.previousElementSibling.textContent)
+    },1000) 
     UI.showAlert('book removed','success')
   }
   else if(e.target.id === 'pen')
