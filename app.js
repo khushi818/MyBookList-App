@@ -120,7 +120,6 @@ class Store
     console.log(books);
     books.push(book);
     localStorage.setItem('books', JSON.stringify(books));
-    window.location.reload();
   }
   static removeBook(id)
   {
@@ -131,7 +130,6 @@ class Store
       {
         books.splice(index,1);
       }
-      window.location.reload();
   });
 
   localStorage.setItem('books',JSON.stringify(books));
@@ -160,9 +158,7 @@ class Store
         // add books
         UI.addBooktoList(book);
         //add to the store
-        setTimeout(()=>{
         Store.addBook(book);
-        },1000) 
         // clear fields
         UI.clearFields();
 
@@ -176,9 +172,7 @@ document.querySelector('#book-list').addEventListener('click' ,(e) =>{
   if(e.target.id === 'cross')
   {
     UI.deleteBook(e.target)
-    setTimeout(()=>{
     Store.removeBook(e.target.parentElement.previousElementSibling.previousElementSibling.textContent)
-    },1000) 
     UI.showAlert('book removed','success')
   }
   else if(e.target.id === 'pen')
@@ -214,7 +208,7 @@ const books = Store.getBooks();
 for(let book = 0 ; book < books.length ; book++){
   const childdiv = ` <li class= "user-card  w-100 p-2  align-items-center  justify-content-center d-none"
                          data-user${book} = "${book}">
-            Title:${books[book].title.trim()}     Author:${books[book].author.trim()}     Id:${books[book].id}
+            <STRONG>Title:</STRONG>${books[book].title.trim()}  <STRONG>Author:</STRONG>"${books[book].author.trim()}  <STRONG>Id:</STRONG>${books[book].id}                 
     </li>`;
 ultag.insertAdjacentHTML('beforeend',childdiv)
 }
@@ -253,7 +247,6 @@ searchBox.addEventListener('input',(e) =>
   let input = e.target.value;
   input = input.toLowerCase();
   //Search(input);
-
 if(input.length > 1){
   for(let i = 0 ; i < books.length ; i++)
   {
@@ -277,6 +270,7 @@ if(input.length > 1){
     let searchCard = ultag.querySelector(`[data-user${card}]`);
     searchCard.classList.remove('d-none')
     searchCard.classList.add('d-flex')
+    break;
     }
    }
 }
@@ -291,14 +285,15 @@ if(input.length === 1)
     let searchCard = ultag.querySelector(`[data-user${card}]`);
     searchCard.classList.remove('d-none')
     searchCard.classList.add('d-flex')
+    break;
     }
   }
 }
 
-  if(input.length == 0)
-  {
-   noresult();
-  }
+if(input.length === 0)
+{
+  noresult();
+}
   e.preventDefault();
 })
 
