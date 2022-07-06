@@ -246,7 +246,7 @@ searchBox.addEventListener('input',(e) =>
   let input = e.target.value;
   input = input.toLowerCase();
   //Search(input);
-  if(input.length > 0)
+  if(input.length > 1)
   for(let i = 0 ; i < books.length ; i++)
   {
     if(titles[i].toLowerCase().includes(input))
