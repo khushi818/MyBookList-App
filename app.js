@@ -163,6 +163,12 @@ class Store
         UI.clearFields();
 
         UI.showAlert('Book Added','success');
+        
+        
+       setTimeout(()=>{
+            alert("refresh the page")
+            window.location.reload();
+       },5000)
     }
   })
 
@@ -174,6 +180,11 @@ document.querySelector('#book-list').addEventListener('click' ,(e) =>{
     UI.deleteBook(e.target)
     Store.removeBook(e.target.parentElement.previousElementSibling.previousElementSibling.textContent)
     UI.showAlert('book removed','success')
+
+     setTimeout(()=>{
+            alert("refresh the page")
+            window.location.reload();
+       },3000)
   }
   else if(e.target.id === 'pen')
   {
@@ -200,7 +211,7 @@ document.addEventListener('DOMContentLoaded', UI.displayBooks);
 
 
 
-// Search Box and its searchhh
+// Search Box and its searchh
 
 //under search
 const ultag = document.querySelector('#form-search')
@@ -240,8 +251,10 @@ function noresult(){
   }
 }  
 
+
 searchBox.addEventListener('input',(e) =>
 {
+  
   document.querySelector('#body-content').classList.remove('d-block');
   document.querySelector('#body-content').classList.add('d-none');
   let input = e.target.value;
